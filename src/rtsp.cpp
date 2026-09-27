@@ -797,6 +797,10 @@ namespace rtsp_stream {
       ss << "a=rtpmap:98 AV1/90000"sv << std::endl;
     }
 
+#ifdef SUNSHINE_ENABLE_PYROWAVE
+    ss << "a=rtpmap:99 PYROWAVE/90000"sv << std::endl;
+#endif
+
     if (!session.surround_params.empty()) {
       // If we have our own surround parameters, advertise them twice first
       ss << "a=fmtp:97 surround-params="sv << session.surround_params << std::endl;
@@ -1092,6 +1096,16 @@ namespace rtsp_stream {
 
       respond(sock, session, &option, 400, "BAD REQUEST", req->sequenceNumber, {});
       return;
+    }
+
+    if (config.monitor.videoFormat == 3) {
+#ifndef SUNSHINE_ENABLE_PYROWAVE
+      BOOST_LOG(warning) << "PyroWave was requested, but this build does not include it"sv;
+      respond(sock, session, &option, 400, "BAD REQUEST", req->sequenceNumber, {});
+      return;
+#else
+      BOOST_LOG(info) << "Client requested PyroWave";
+#endif
     }
 
     // Check that any required encryption is enabled

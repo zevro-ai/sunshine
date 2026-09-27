@@ -759,6 +759,12 @@ namespace nvhttp {
         codec_mode_flags |= SCM_AV1_HIGH10_444;
       }
     }
+#ifdef SUNSHINE_ENABLE_PYROWAVE
+  #ifndef SCM_PYROWAVE
+    #define SCM_PYROWAVE 0x00800000
+  #endif
+    codec_mode_flags |= SCM_PYROWAVE;
+#endif
     tree.put("root.ServerCodecModeSupport", codec_mode_flags);
 
     if (!config::nvhttp.external_ip.empty()) {
