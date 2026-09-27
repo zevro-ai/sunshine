@@ -19,6 +19,14 @@
   <a href="https://codecov.io/gh/LizardByte/Sunshine"><img src="https://img.shields.io/codecov/c/gh/LizardByte/Sunshine?token=SMGXQ5NVMJ&style=for-the-badge&logo=codecov&label=codecov" alt="Codecov"></a>
 </div>
 
+## PyroWave fork
+
+This fork exists to add [PyroWave](https://github.com/Themaister/pyrowave) support to Sunshine. The codec is on the [`pyrowave`](https://github.com/zevro-ai/sunshine/tree/pyrowave) branch. `master` tracks upstream and does not include it.
+
+The matching client is [zevro-ai/moonlight](https://github.com/zevro-ai/moonlight). It uses the protocol bits from [zevro-ai/moonlight-common-c](https://github.com/zevro-ai/moonlight-common-c). Install `libpyrowave` under `~/opt/pyrowave` (`lib64` or `lib`, plus `include`) before configuring. CMake enables the codec when that library is present.
+
+PyroWave in this fork is 8-bit 4:2:0 only. On the client, set the codec to Automatic and turn HDR and YUV 4:4:4 off. Frames are read back to the CPU before encode.
+
 ## ℹ️ About
 
 Sunshine is a self-hosted game stream host for Moonlight.
